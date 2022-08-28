@@ -1,6 +1,6 @@
 #include "main.h"
 
-void deleteBullets(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet *bullet_last)
+void deleteBullets1(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet *bullet_last, Application *app)
 {
         Bullet* prev_in_iter; 
         Bullet* curr_bullet;
@@ -9,20 +9,77 @@ void deleteBullets(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet *bullet_last)
         prev_in_iter = bullet_1st; 
 
         bullet_last_ye = bullet_last;
+        
+        float counter;
+
+        counter = 0;
 
             for(curr_bullet = bullet_2nd; curr_bullet != NULL; curr_bullet = curr_bullet->next){
 
-                if(curr_bullet->y >= 3500 || curr_bullet->y <= -3500 || curr_bullet->x >= 3500 || curr_bullet->x <= -3500){   
-
+                counter += 1;
+                printf("Counter is: %f \n", counter);
+                if(curr_bullet->y >= 2000 || curr_bullet->y <= -2000 || curr_bullet->x >= 2000 || curr_bullet->x <= -2000){   
+                printf("The current bullet's location is: %f , %f \n", curr_bullet->x, curr_bullet->y);
+                    
                     if (curr_bullet -> next == NULL){
 
                         curr_bullet -> prev -> next = NULL; 
-                        bullet_last_ye = curr_bullet->prev; 
+                        app->end_bullet = curr_bullet->prev; 
+                        printf("The last bullet is being cleared! \n");
+
 
                     } else {
 
                         curr_bullet->next->prev = curr_bullet->prev; 
                         curr_bullet->prev->next = curr_bullet->next; 
+                        printf("Not the last bullet being cleared \n");
+
+                    }
+
+                free(curr_bullet);
+
+                curr_bullet = prev_in_iter; 
+                }
+
+            prev_in_iter = curr_bullet; 
+
+            }
+
+}
+
+void deleteBullets2(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet *bullet_last, Application *app)
+{
+        Bullet* prev_in_iter; 
+        Bullet* curr_bullet;
+        Bullet* bullet_last_ye;
+
+        prev_in_iter = bullet_1st; 
+
+        bullet_last_ye = bullet_last;
+        
+        float counter;
+
+        counter = 0;
+
+            for(curr_bullet = bullet_2nd; curr_bullet != NULL; curr_bullet = curr_bullet->next){
+
+                counter += 1;
+                printf("Counter is: %f \n", counter);
+                if(curr_bullet->y >= 2000 || curr_bullet->y <= -2000 || curr_bullet->x >= 2000 || curr_bullet->x <= -2000){   
+                printf("The current bullet's location is: %f , %f \n", curr_bullet->x, curr_bullet->y);
+                    
+                    if (curr_bullet -> next == NULL){
+
+                        curr_bullet -> prev -> next = NULL; 
+                        app->end_bullet_enemy = curr_bullet->prev; 
+                        printf("The last bullet is being cleared! \n");
+
+
+                    } else {
+
+                        curr_bullet->next->prev = curr_bullet->prev; 
+                        curr_bullet->prev->next = curr_bullet->next; 
+                        printf("Not the last bullet being cleared \n");
 
                     }
 
@@ -42,12 +99,16 @@ void fireBullet(Application *app, Player *player)
 
     player->reloading = 15; 
 
-    Bullet* new_bullet = malloc(sizeof(Bullet));
+    Bullet *new_bullet;
+    
+    new_bullet = malloc(sizeof(Bullet));
 
     if (new_bullet == NULL){
         printf("Insufficient memory to allocate for bullet \n");
         exit(1);
     }
+
+    memset(new_bullet, 0, sizeof(Bullet));        
 
     new_bullet->x = player->x + (PLAYER_WIDTH/2);
     new_bullet->y = player->y;

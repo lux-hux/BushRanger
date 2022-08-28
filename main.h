@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 
-#define PLAYER_MOVEMENT_SPEED 5
+#define PLAYER_MOVEMENT_SPEED 7
 #define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 640
 #define ENEMY_HEIGHT 48
@@ -106,7 +106,9 @@ void presentScene(Application *app);
 
 SDL_Texture *loadTexture(Application *app,char* fileName);
 
-void deleteBullets(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet *bullet_last);
+void deleteBullets1(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet *bullet_last, Application *app);
+
+void deleteBullets2(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet *bullet_last, Application *app);
 
 void fireBullet(Application *app, Player *player);
 

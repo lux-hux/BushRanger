@@ -195,15 +195,17 @@ void playerMovement(Application *app, Player *player)
         while(curr_bullet != NULL)
         {   
         
-            curr_bullet->y -= 10;
-         
-            curr_bullet = curr_bullet ->next; 
+            curr_bullet->y -= 10; 
 
+            printf("Current bullet is at y: %f \n", curr_bullet->y);
+         
+            curr_bullet = curr_bullet ->next;
+        
         }
 
 // |======= Player bullet delete ======= | 
 
-deleteBullets(app->start_bullet, app->start_bullet->next, app->end_bullet);
+deleteBullets1(app->start_bullet, app->start_bullet->next, app->end_bullet, app);
 
 }
 
@@ -346,8 +348,8 @@ void enemyMovement(Application *app, Player *player)
 
 
     // |======= Enemy bullet delete ======= | 
-
-    deleteBullets(app->start_bullet_enemy, app->start_bullet_enemy->next, app->end_bullet);
+//
+    deleteBullets2(app->start_bullet_enemy, app->start_bullet_enemy->next, app->end_bullet, app);
 
     // |======= Movement of Enemies ======= | 
 
@@ -627,16 +629,33 @@ int main (int argc, char *argv[])
 
     // Initialise player bullet
 
-    Bullet* dummy_bullet = malloc(sizeof(Bullet));
+    Bullet *dummy_bullet;
+
+   dummy_bullet = malloc(sizeof(Bullet));
+
+   memset(dummy_bullet, 0, sizeof(Bullet));
 
     if(dummy_bullet == NULL){
         printf("insufficient memory \n");
     }
 
+    Bullet *dummy_bullet_start;
+
+   dummy_bullet_start = malloc(sizeof(Bullet));
+
+   memset(dummy_bullet_start, 0, sizeof(Bullet));
+
+    if(dummy_bullet_start == NULL){
+        printf("insufficient memory \n");
+    }
+
+
+    dummy_bullet_start -> prev = NULL;
     dummy_bullet->next = NULL;
-    dummy_bullet->prev = NULL;
+    dummy_bullet_start -> next =  dummy_bullet;
+    dummy_bullet->prev = dummy_bullet_start;
     app.end_bullet = dummy_bullet; 
-    app.start_bullet = dummy_bullet; 
+    app.start_bullet = dummy_bullet_start; 
 
     // Initialise enemy bullet
 
@@ -645,6 +664,8 @@ int main (int argc, char *argv[])
         if(dummy_bullet_enemy == NULL){
         printf("insufficient memory \n");
     }   
+
+    memset(dummy_bullet_enemy, 0, sizeof(Bullet));
 
     dummy_bullet_enemy->next = NULL;
     dummy_bullet_enemy->prev = NULL;
@@ -665,7 +686,7 @@ int main (int argc, char *argv[])
 
         positionCamera(&app, &player);
 
-        if(app.time % 200 == 0){
+        if(app.time % 500 == 0){
             spawnEnemy(&app, &player);
         }
 
