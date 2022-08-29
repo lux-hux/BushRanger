@@ -106,9 +106,7 @@ void presentScene(Application *app);
 
 SDL_Texture *loadTexture(Application *app,char* fileName);
 
-void deleteBullets1(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet *bullet_last, Application *app);
-
-void deleteBullets2(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet *bullet_last, Application *app);
+void deleteBullets(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet **bullet_last);
 
 void fireBullet(Application *app, Player *player);
 

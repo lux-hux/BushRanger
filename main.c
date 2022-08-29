@@ -205,7 +205,7 @@ void playerMovement(Application *app, Player *player)
 
 // |======= Player bullet delete ======= | 
 
-deleteBullets1(app->start_bullet, app->start_bullet->next, app->end_bullet, app);
+    deleteBullets(app->start_bullet, app->start_bullet->next, &(app->end_bullet));
 
 }
 
@@ -348,8 +348,8 @@ void enemyMovement(Application *app, Player *player)
 
 
     // |======= Enemy bullet delete ======= | 
-//
-    deleteBullets2(app->start_bullet_enemy, app->start_bullet_enemy->next, app->end_bullet, app);
+
+    deleteBullets(app->start_bullet_enemy, app->start_bullet_enemy->next, &(app->end_bullet_enemy));
 
     // |======= Movement of Enemies ======= | 
 
@@ -686,7 +686,7 @@ int main (int argc, char *argv[])
 
         positionCamera(&app, &player);
 
-        if(app.time % 500 == 0){
+        if(app.time % 1000 == 0){
             spawnEnemy(&app, &player);
         }
 

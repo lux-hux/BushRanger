@@ -1,79 +1,34 @@
 #include "main.h"
 
-void deleteBullets1(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet *bullet_last, Application *app)
+void deleteBullets(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet **bullet_last)
 {
         Bullet* prev_in_iter; 
         Bullet* curr_bullet;
         Bullet* bullet_last_ye;
 
         prev_in_iter = bullet_1st; 
-
-        bullet_last_ye = bullet_last;
-        
-        float counter;
-
-        counter = 0;
+    
 
             for(curr_bullet = bullet_2nd; curr_bullet != NULL; curr_bullet = curr_bullet->next){
 
-                counter += 1;
-                printf("Counter is: %f \n", counter);
                 if(curr_bullet->y >= 2000 || curr_bullet->y <= -2000 || curr_bullet->x >= 2000 || curr_bullet->x <= -2000){   
                 printf("The current bullet's location is: %f , %f \n", curr_bullet->x, curr_bullet->y);
                     
                     if (curr_bullet -> next == NULL){
 
                         curr_bullet -> prev -> next = NULL; 
-                        app->end_bullet = curr_bullet->prev; 
+
+                        printf("Memory address of bullet_last is %p \n", (void *)bullet_last);
+
+                        printf("Memory address of curr_bullet->prev is %p \n", (void *)curr_bullet->prev);
+
                         printf("The last bullet is being cleared! \n");
+                        
+                        *(bullet_last) = curr_bullet->prev; 
+                        
+                        printf("Memory address of bullet_last is %p \n", (void *)bullet_last);
 
-
-                    } else {
-
-                        curr_bullet->next->prev = curr_bullet->prev; 
-                        curr_bullet->prev->next = curr_bullet->next; 
-                        printf("Not the last bullet being cleared \n");
-
-                    }
-
-                free(curr_bullet);
-
-                curr_bullet = prev_in_iter; 
-                }
-
-            prev_in_iter = curr_bullet; 
-
-            }
-
-}
-
-void deleteBullets2(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet *bullet_last, Application *app)
-{
-        Bullet* prev_in_iter; 
-        Bullet* curr_bullet;
-        Bullet* bullet_last_ye;
-
-        prev_in_iter = bullet_1st; 
-
-        bullet_last_ye = bullet_last;
-        
-        float counter;
-
-        counter = 0;
-
-            for(curr_bullet = bullet_2nd; curr_bullet != NULL; curr_bullet = curr_bullet->next){
-
-                counter += 1;
-                printf("Counter is: %f \n", counter);
-                if(curr_bullet->y >= 2000 || curr_bullet->y <= -2000 || curr_bullet->x >= 2000 || curr_bullet->x <= -2000){   
-                printf("The current bullet's location is: %f , %f \n", curr_bullet->x, curr_bullet->y);
-                    
-                    if (curr_bullet -> next == NULL){
-
-                        curr_bullet -> prev -> next = NULL; 
-                        app->end_bullet_enemy = curr_bullet->prev; 
-                        printf("The last bullet is being cleared! \n");
-
+                        printf("Memory address of curr_bullet->prev is %p \n", (void *)curr_bullet->prev);
 
                     } else {
 
