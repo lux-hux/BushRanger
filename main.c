@@ -700,11 +700,18 @@ int main (int argc, char *argv[])
 
     }
 
+
+    system('leaks ./windy');
+
     SDL_DestroyWindow(app.window);
 
     SDL_DestroyRenderer(app.renderer);
 
     SDL_Quit();
+
+    
+
+    //exit(1);
 
     return 0;
 }

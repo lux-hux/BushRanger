@@ -4,11 +4,8 @@ void deleteBullets(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet **bullet_last)
 {
         Bullet* prev_in_iter; 
         Bullet* curr_bullet;
-        Bullet* bullet_last_ye;
 
-        prev_in_iter = bullet_1st; 
     
-
             for(curr_bullet = bullet_2nd; curr_bullet != NULL; curr_bullet = curr_bullet->next){
 
                 if(curr_bullet->y >= 2000 || curr_bullet->y <= -2000 || curr_bullet->x >= 2000 || curr_bullet->x <= -2000){   
@@ -40,10 +37,10 @@ void deleteBullets(Bullet *bullet_1st, Bullet *bullet_2nd, Bullet **bullet_last)
 
                 free(curr_bullet);
 
-                curr_bullet = prev_in_iter; 
+                curr_bullet = bullet_1st; 
                 }
 
-            prev_in_iter = curr_bullet; 
+            bullet_1st = curr_bullet; 
 
             }
 
